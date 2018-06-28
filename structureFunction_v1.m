@@ -29,8 +29,10 @@ function [ D, r ] = structureFunction_v1( fluc_v , z, options)
 %       rev. 7/2010 (efficiency) 
 %       rev. 8/2010 (explicitly remove mean [should be done already], allow nans in profiles) 
 %       rev. 9/2011  (return signed r value, to allow upward or downward preference in D(z,r) fit)
-% M. Guerra Dec 8 2015, change r deffinition to uplooking
-% v1    18/05/2018  G Wakelam - Adapted for 3d matrix, aligned dimensions to other ReDAPT processing scripts
+% M. Guerra 
+%       Dec 8 2015, change r deffinition to uplooking
+% G. Wakelam
+% v1    18/05/2018  Adapted for 3d matrix, aligned dimensions to other ReDAPT processing scripts
 %       
 
 [time, ensembles, bins] = size(fluc_v);
