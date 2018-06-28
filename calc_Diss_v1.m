@@ -1,6 +1,7 @@
 function [diss, D, r] = calc_Diss_v1(fluc_v,z,options)
 % Calcualte TKE dissipation using Osalusi (2009) structure function method.
-% 
+%  **NOTE: THIS FUNCTION IS STILL UNDER DEVELOPMENT***
+%
 %  INPUTS:
 %    [fluc_v]: A structure containing detrended along-beam velocity measurements (Size = ns x ne x nz)  
 % 

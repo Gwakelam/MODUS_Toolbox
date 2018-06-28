@@ -1,4 +1,6 @@
 function [sens, sens_mean] = calc_xyvel_v1(vb, tilt, options)
+% Calculates velocities as aligned to ADCP sensor axes (x, y, z) using
+% along-beam measurements. Incldes (optional) correction for pitch and roll. 
 %
 %  INPUTS:
 %    [mean_vb]: A structure containing measured along-beam velocities (Size = ns x ne x nz)
@@ -12,7 +14,6 @@ function [sens, sens_mean] = calc_xyvel_v1(vb, tilt, options)
 %    data period (size = ne)
 %         tilt.p - pitch about x axis
 %         tilt.r - roll about y axis
-%         tilt.h - heading avout z axis
 % 
 %    [options]: A structure containing optional parameters
 %         options.theta  - beam angle from vertical (Defult = 1)
@@ -21,11 +22,11 @@ function [sens, sens_mean] = calc_xyvel_v1(vb, tilt, options)
 % OUTPUTS:
 %    [sens]: A matrix of the sensor-axes resolved velocities 
 %         sens.x  - measured velocity along sensor x-axis (Size = ns x ne x nz)
-%         sens.xm - mean velocity along to sensor x-axis  (Size = ne x nz)
-%         sens.y  - measured velocity along sensor y-axis (Size = ns x ne x nz)
-%         sens.ym - mean velocity along to sensor y-axis  (Size = ne x nz)
+%         sens.y  - measured velocity along sensor y-axis (Size = ns x ne x nz)        
 % 
 %    [sens_mean]: signed magnitude of horizontal velocity
+%         sens_mean.x - mean velocity along to sensor x-axis  (Size = ne x nz)
+%         sens_mean.y - mean velocity along to sensor y-axis  (Size = ne x nz)
 %
 % WHERE:
 %        ns = number of samples in a period of stationarity
@@ -33,7 +34,8 @@ function [sens, sens_mean] = calc_xyvel_v1(vb, tilt, options)
 %        nz = number of depth/distance cells from sensor
 %
 %CHANGES
-% 24/05/18  GW - added sens_mean output struct for mean values
+% 24/05/18  GW - separated output struct into sens (for non-averaged) and  
+%           sens_mean (for 5-min averaged) values
 %
 
 %% Set defaults

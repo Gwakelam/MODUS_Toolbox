@@ -94,14 +94,14 @@ ylabel('C')
 %% Compute from ADCP data
 const0 = (options.alpha0+1)/(1+2*options.alpha0/tand(options.phi)^2)/(4*sind(options.phi)^2);
 
-% Create matrix of noise estimates for easy removal
+% Create matrix of noise bias values for easy removal
 for bb = 1:4
     vb = ['B',num2str(bb)];
     std_noise_mat.(vb) = ones(nt,1) * std_noise.(vb);
 end
 
 
-% calc TKE
+% calc TKE (This part doesn't change between Oslusi & Lu/Lueck methods)
 TKE = const0*(std_vb.B1.^2-std_noise_mat.B1.^2+...
     std_vb.B2.^2-std_noise_mat.B2.^2+...
     std_vb.B3.^2-std_noise_mat.B3.^2+...

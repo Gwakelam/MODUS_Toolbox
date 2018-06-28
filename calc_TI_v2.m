@@ -41,8 +41,8 @@ function [TI] = calc_TI_v2(std_v, noise_v, mean_v, options)
 
 %% Default Options
 if ~isfield(options, 'slack')
-    options.slack = 0.5;
-    disp('Slack water not defined in options, setting to <= 0.5 m/s')
+    options.slack = 0.3;
+    fprintf('Slack water not defined in options, setting to <= %.2f m/s \n', options.slack)
 end
 
 %% Dimension Check

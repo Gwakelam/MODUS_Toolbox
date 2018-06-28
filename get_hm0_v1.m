@@ -19,8 +19,9 @@ function [hm0] = get_hm0_v1(Tref)
 %################################################################################################
 
 % Load file with reference measurements 
-load('C:\3. ReDAPT Matlab Work\Matlab_Scripts\v1.1\input_data\cube_refs.mat');
+load('C:\3. ReDAPT Matlab Work\Matlab_Query_Scripts\v1.1\input_data\cube_refs.mat');
 
+% find start and end values, time range matching data
 date_start = Tref(1);
 date_end = Tref(end);
 
@@ -29,13 +30,13 @@ under = find(cube_refs.TS(:,1) <= datenum(date_end));
 
 daterange = [over(1) under(end)];
 
-% Hm0 values
+% Get Hm0 values
 hm0 = cube_refs.TS(daterange(1):daterange(2), 8);
 % Corresponding timestamps
 Thm0 = cube_refs.TS(daterange(1):daterange(2), 1);
 
 % To eliminate additional Hm0 measurements in middle of dataset that dont match
-% measured data (ie, on opposing tide, gaps in data)
+% measured data (ie, on opposing tide, gaps in data etc.)
 Tref_dv       = datevec(Tref);
 Thm0_dv       = datevec(Thm0);
 

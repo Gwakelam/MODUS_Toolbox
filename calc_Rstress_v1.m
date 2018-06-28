@@ -73,8 +73,9 @@ vpyvpz = - (std_vb.B4.^2 - std_vb.B3.^2)/(4*cosd(options.theta)*sind(options.the
 R.xz = vpxvpz;
 R.yz = vpyvpz;
 
+% Transform from sensor axes to flow axes
 if flag_heading
-    % Heading correction as used by Guerra: https://github.com/mguerrap/5Beam-Turbulence-Methods/blob/master/RS_VT.m 
+    % Heading correction as per Guerra: https://github.com/mguerrap/5Beam-Turbulence-Methods/blob/master/RS_VT.m 
     R.uw = bsxfun(@times, R.xz, cosd(heading)) + bsxfun(@times, R.yz, sind(heading));
     R.vw = bsxfun(@times, R.yz, cosd(heading)) - bsxfun(@times, R.xz, sind(heading));
 end

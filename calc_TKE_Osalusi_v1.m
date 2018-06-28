@@ -1,8 +1,7 @@
 function [TKE] = calc_TKE_Osalusi_v1(std_vb, std_noise, options)
-% From Justine Mcmillan scripts
+% Based on function provided by Justine Mcmillan
 %
-% Calculate TKE using a variance method approach as described by Osalusi
-% (2009)
+% Calculate TKE using a variance method approach as described by Osalusi(2009)
 %  - TKE = C * [sum(beam variances - noise variances)]^2
 %      
 %    where C is 
@@ -29,10 +28,10 @@ function [TKE] = calc_TKE_Osalusi_v1(std_vb, std_noise, options)
 %         std_noise.B3 - Beam 3      
 %         std_noise.B4 - Beam 4 
 %
-%    [R]: A structure of Reynolds stresses for tilt correction - NEEDS TO BE ADDED
+%    [R]: A structure of Reynolds stresses for tilt correction - NOT YET IMPLEMENTED
 %               (Size = ne x nz)
 %         R.xz - 
-%         R.yz
+%         R.yz - 
 % 
 %    [options]: A structure containing optional parameters
 %         options.theta - Beam angle with respect to vertical (Default = 20)
@@ -60,7 +59,7 @@ if ~isfield(options,'theta');
     disp(['beam angle set to ', num2str(options.theta)])
 end
 
-% Xi - semi empirical constant. Used by Osalusi, Nesun & nakagawa.
+% Xi - semi empirical constant. Used by Osalusi, value from Nesun & nakagawa.
 if ~isfield(options,'xi0'); 
     options.xi0 = 0.17;
     disp(['Empirical constant Xi set to ', num2str(options.xi0)])
@@ -92,14 +91,14 @@ ylabel('C')
 %% Compute from ADCP data
 const0 = 1/(16*sind(options.theta)^4*(1+options.xi0*(2*cotd(options.theta)^2-1)));
 
-% Create matrix of noise estimates for easy removal
+% Create matrix of noise bias values for easy removal
 for bb = 1:4
     vb = ['B',num2str(bb)];
     std_noise_mat.(vb) = ones(nt,1) * std_noise.(vb);
 end
 
 
-% calc TKE
+% calc TKE (This part doesn't change between Oslusi & Lu/Lueck methods)
 TKE = const0*((std_vb.B1.^2-std_noise_mat.B1.^2+...
     std_vb.B2.^2-std_noise_mat.B2.^2+...
     std_vb.B3.^2-std_noise_mat.B3.^2+...
